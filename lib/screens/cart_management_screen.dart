@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fresquisima/routes/router.gr.dart';
+import 'package:fresquisima/routes/AppRouter.gr.dart';
 import 'package:fresquisima/values/data.dart';
 import 'package:fresquisima/values/values.dart';
 
@@ -92,7 +92,7 @@ class _CartManagementState extends State<CartManagement> {
               child: Text("AGREGAR AL CARRITO",style: TextStyle(color: AppColors.primaryColor),),
               onPressed: ()=>{
                   updateCart(widget.product, _units),
-                  Router.navigator.pop()
+                  AppRouter.navigator.pop()
               },
             )
           ],

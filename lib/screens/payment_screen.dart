@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
-import 'package:fresquisima/routes/router.gr.dart';
+import 'package:fresquisima/routes/AppRouter.gr.dart';
 import 'package:fresquisima/theme.dart';
 import 'package:fresquisima/values/data.dart';
 import 'package:fresquisima/values/values.dart';
@@ -57,8 +57,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
         RaisedButton(
           child: Text("VOLVER AL INICIO"),
           onPressed: ()=>{
-            Router.navigator.pushNamedAndRemoveUntil(
-              Router.rootScreen,
+            AppRouter.navigator.pushNamedAndRemoveUntil(
+              AppRouter.rootScreen,
                   (Route<dynamic> route) => false,
             )
           },
@@ -197,7 +197,7 @@ Cualquier pedido realizado después de esa hora será despachado en 3 días.''')
                             child: Text("Volver",style: TextStyle(color: white),),
                             color: Colors.red,
                             onPressed: () => {
-                              Router.navigator.pop()
+                              AppRouter.navigator.pop()
                             },
                           ),
                           RaisedButton(
@@ -264,8 +264,8 @@ Cualquier pedido realizado después de esa hora será despachado en 3 días.''')
               actions: <Widget>[
                 FlatButton(
                     onPressed: ()=>{
-                    Router.navigator.pushNamedAndRemoveUntil(
-                    Router.rootScreen,
+                    AppRouter.navigator.pushNamedAndRemoveUntil(
+                    AppRouter.rootScreen,
                     (Route<dynamic> route) => false,
                     )
             },

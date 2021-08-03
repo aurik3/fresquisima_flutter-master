@@ -2,8 +2,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fresquisima/routes/router.dart';
-import 'package:fresquisima/routes/router.gr.dart';
+import 'package:fresquisima/routes/AppRouter.dart';
+import 'package:fresquisima/routes/AppRouter.gr.dart';
 import 'package:fresquisima/screens/cart_management_screen.dart';
 import 'package:fresquisima/theme.dart';
 import 'package:fresquisima/values/data.dart';
@@ -44,8 +44,8 @@ class _CartItemState extends State<CartItem> {
                       child: GestureDetector(
 
                         onTap: ()=>{
-                          Router.navigator.pushNamed(
-                              Router.rootScreen,arguments:CurrentScreen(
+                          AppRouter.navigator.pushNamed(
+                              AppRouter.rootScreen,arguments:CurrentScreen(
                               currentScreen: CartManagement(product: widget.product,),
                               tab_no: 0
                           )).then((value) => {setState((){}),widget.callback()})

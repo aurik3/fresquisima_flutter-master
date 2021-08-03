@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 
 
 @CupertinoAutoRouter()
-class $Router {
+class $AppRouter {
 
   @initial
   @CustomAutoRouter(transitionsBuilder: TransitionsBuilders.slideRight, durationInMilliseconds: 2000)

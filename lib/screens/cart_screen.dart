@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fresquisima/routes/router.gr.dart';
+import 'package:fresquisima/routes/AppRouter.gr.dart';
 import 'package:fresquisima/values/data.dart';
 import 'package:fresquisima/values/values.dart';
 import 'package:fresquisima/widgets/cartItem.dart';
@@ -54,7 +54,7 @@ class _CartScreenState extends State<CartScreen> {
                   RaisedButton(
                     child: Text("ir a pago >>",style: TextStyle(color: AppColors.white),),
                     onPressed: _carritolist.length>0?()=>{
-                      Router.navigator.pushNamed(Router.paymentScreen)
+                      AppRouter.navigator.pushNamed(AppRouter.paymentScreen)
                     }
                         :null
                   ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fresquisima/routes/router.gr.dart';
+import 'package:fresquisima/routes/AppRouter.gr.dart';
 import 'package:fresquisima/theme.dart';
 import 'package:fresquisima/values/data.dart';
 import 'package:fresquisima/values/values.dart';
@@ -44,7 +44,7 @@ class SplashScreen extends StatelessWidget{
               RaisedButton(
                 color: white,
                 onPressed: ()=>{
-                  Router.navigator.pushNamed(Router.loginScreen)
+                  AppRouter.navigator.pushNamed(AppRouter.loginScreen)
                 },
                 child: Text("Ingresar",style: TextStyle(color: AppColors.primaryColor),),
               ),
@@ -53,7 +53,7 @@ class SplashScreen extends StatelessWidget{
               RaisedButton(
                 color: white,
                 onPressed: ()=>{
-                  Router.navigator.pushNamed(Router.registerScreen)
+                  AppRouter.navigator.pushNamed(AppRouter.registerScreen)
                 },
                 child: Text("Registrarse",style: TextStyle(color: AppColors.primaryColor),),
               )

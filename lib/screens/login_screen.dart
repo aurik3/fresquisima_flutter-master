@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
-import 'package:fresquisima/routes/router.gr.dart';
+/*import 'package:flutter_facebook_login/flutter_facebook_login.dart';*/
+import 'package:fresquisima/routes/AppRouter.gr.dart';
 import 'package:fresquisima/values/data.dart';
 import 'package:fresquisima/values/values.dart';
 import 'package:http/http.dart' as http;
@@ -83,8 +83,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           {
                             handleSingIn(widget.mailController.text.trim(), widget.pwController.text).then((value) => {
                               if(value=="success"){
-                                Router.navigator.pushNamedAndRemoveUntil(
-                                  Router.rootScreen,
+                                AppRouter.navigator.pushNamedAndRemoveUntil(
+                                  AppRouter.rootScreen,
                                       (Route<dynamic> route) => false,
                                 )
                               }
@@ -106,11 +106,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                     ),
                     SizedBox(height: 50,),
+                    /*
                     RaisedButton(
                       color: Color.fromARGB(255, 59, 89, 152),
                       child: Text("INGRESAR CON FB"),
                       onPressed: ()=>{_loginWithFB()},
                     ),
+                    */
                     SizedBox(height: 20,),
 
                   ],
@@ -126,7 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     borderSide: BorderSide(color: AppColors.primaryColor,width: 2),
                     child: Text("Crear Cuenta",style: TextStyle(fontSize: 12)),
                     onPressed: ()=>{
-                      Router.navigator.pushNamed(Router.registerScreen)
+                      AppRouter.navigator.pushNamed(AppRouter.registerScreen)
                     },
                   ),
                   SizedBox(width: 20,),
@@ -144,7 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
   );
   }
 
-  final facebookLogin = FacebookLogin();
+/*  final facebookLogin = FacebookLogin();
 
   _loginWithFB() async{
 
@@ -177,8 +179,8 @@ class _LoginScreenState extends State<LoginScreen> {
           userProfile = profile;
           _isLoggedIn = true;
         });
-        Router.navigator.pushNamedAndRemoveUntil(
-          Router.rootScreen,
+        AppRouter.navigator.pushNamedAndRemoveUntil(
+          AppRouter.rootScreen,
               (Route<dynamic> route) => false,
         );
         break;
@@ -191,6 +193,6 @@ class _LoginScreenState extends State<LoginScreen> {
         break;
     }
 
-  }
+  }*/
 
 }

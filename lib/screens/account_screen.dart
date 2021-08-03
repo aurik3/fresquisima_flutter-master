@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:fresquisima/routes/router.gr.dart';
+import 'package:fresquisima/routes/AppRouter.gr.dart';
 import 'package:fresquisima/values/data.dart';
 import 'package:fresquisima/values/values.dart';
 import 'package:fresquisima/widgets/order.dart';
@@ -54,8 +54,8 @@ class _AccountScreenState extends State<AccountScreen> {
               Text(mail),
               SizedBox(height: 10,),
               RaisedButton(onPressed: ()=>{
-                Router.navigator.pushNamedAndRemoveUntil(
-                  Router.loginScreen,
+                AppRouter.navigator.pushNamedAndRemoveUntil(
+                  AppRouter.loginScreen,
                       (Route<dynamic> route) => false,
                 )
               },

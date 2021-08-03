@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fresquisima/routes/router.dart';
-import 'package:fresquisima/routes/router.gr.dart';
+import 'package:fresquisima/routes/AppRouter.dart';
+import 'package:fresquisima/routes/AppRouter.gr.dart';
 import 'package:fresquisima/screens/category_screen.dart';
 import 'package:fresquisima/values/data.dart';
 import 'package:fresquisima/values/values.dart';
@@ -32,8 +32,8 @@ class HomeScreen extends StatelessWidget{
                       GestureDetector(
                         onTap: ()=>{
                           selectedCategory="VERDURAS",
-                          Router.navigator.pushNamed(
-                              Router.rootScreen,arguments:CurrentScreen(
+                          AppRouter.navigator.pushNamed(
+                              AppRouter.rootScreen,arguments:CurrentScreen(
                               currentScreen: CategoryScreen(),
                               tab_no: 0
                           )
@@ -45,8 +45,8 @@ class HomeScreen extends StatelessWidget{
                       GestureDetector(
                         onTap: ()=>{
                           selectedCategory="FRUTAS",
-                          Router.navigator.pushNamed(
-                              Router.rootScreen,arguments:CurrentScreen(
+                          AppRouter.navigator.pushNamed(
+                              AppRouter.rootScreen,arguments:CurrentScreen(
                               currentScreen: CategoryScreen(),
                               tab_no: 0
                           )
@@ -58,8 +58,8 @@ class HomeScreen extends StatelessWidget{
                       GestureDetector(
                         onTap: ()=>{
                           selectedCategory="PANADERIA",
-                          Router.navigator.pushNamed(
-                              Router.rootScreen,arguments:CurrentScreen(
+                          AppRouter.navigator.pushNamed(
+                              AppRouter.rootScreen,arguments:CurrentScreen(
                               currentScreen: CategoryScreen(),
                               tab_no: 0
                           )

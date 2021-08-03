@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:fresquisima/routes/router.dart';
+import 'package:fresquisima/routes/AppRouter.dart';
 import 'package:fresquisima/screens/category_screen.dart';
 import 'package:fresquisima/screens/login_screen.dart';
 import 'package:fresquisima/screens/payment_screen.dart';
@@ -9,7 +9,7 @@ import 'package:fresquisima/screens/register_screen.dart';
 import 'package:fresquisima/screens/root_screen.dart';
 import 'package:fresquisima/screens/splash_screen.dart';
 
-class Router{
+class AppRouter{
   static const loginScreen = '/';
   static const splashScreen = '/splash-screen';
   static const paymentScreen = '/payment-screen';
@@ -24,22 +24,22 @@ class Router{
     final args = settings.arguments;
 
     switch (settings.name) {
-      case Router.loginScreen:
+      case AppRouter.loginScreen:
         return CupertinoPageRoute<dynamic>(
           builder: (_) => LoginScreen(),
           settings: settings,
         );
-      case Router.splashScreen:
+      case AppRouter.splashScreen:
         return CupertinoPageRoute<dynamic>(
           builder: (_) => SplashScreen(),
           settings: settings,
         );
-      case Router.registerScreen:
+      case AppRouter.registerScreen:
         return MaterialPageRoute<dynamic>(
           builder: (_) => RegisterScreen(),
           settings: settings,
         );
-      case Router.rootScreen:
+      case AppRouter.rootScreen:
         if (hasInvalidArgs<CurrentScreen>(args)) {
           return misTypedArgsRoute<CurrentScreen>(args);
         }
@@ -48,7 +48,7 @@ class Router{
           builder: (_) => RootScreen(currentScreen: typedArgs),
           settings: settings,
         );
-      case Router.categoryScreen:
+      case AppRouter.categoryScreen:
         if (hasInvalidArgs<Key>(args)) {
           return misTypedArgsRoute<Key>(args);
         }
@@ -57,7 +57,7 @@ class Router{
           builder: (_) => CategoryScreen(),
           settings: settings,
         );
-      case Router.paymentScreen:
+      case AppRouter.paymentScreen:
         if (hasInvalidArgs<Key>(args)) {
           return misTypedArgsRoute<Key>(args);
         }

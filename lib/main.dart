@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fresquisima/routes/router.gr.dart';
+import 'package:fresquisima/routes/AppRouter.gr.dart';
 import 'package:fresquisima/theme.dart';
 import 'package:fresquisima/values/data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,9 +32,9 @@ class App extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: buildLightTheme(context),
-      initialRoute: _loggedIn ? Router.rootScreen :Router.splashScreen,
-      onGenerateRoute: Router.onGenerateRoute,
-      navigatorKey: Router.navigator.key,
+      initialRoute: _loggedIn ? AppRouter.rootScreen : AppRouter.splashScreen,
+      onGenerateRoute: AppRouter.onGenerateRoute,
+      navigatorKey: AppRouter.navigator.key,
     );
   }
 

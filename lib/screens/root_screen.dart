@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fresquisima/routes/router.dart';
+import 'package:fresquisima/routes/AppRouter.dart';
 
 
 import 'package:fresquisima/values/data.dart';
