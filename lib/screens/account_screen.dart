@@ -28,9 +28,21 @@ class _AccountScreenState extends State<AccountScreen> {
 
   final List<int> _openTickets = [];
 
+  bool _areOrdersLoaded=false;
+
 
   Widget build(BuildContext context) {
-    return Scaffold(
+
+    getOrders().then((value) => {
+      if(this.mounted)
+        {
+          setState((){
+            _areOrdersLoaded = true;
+          })
+        }
+    });
+
+    return !_areOrdersLoaded? Center(child: CircularProgressIndicator(),):Scaffold(
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -54,9 +66,9 @@ class _AccountScreenState extends State<AccountScreen> {
               Text(mail),
               SizedBox(height: 10,),
               RaisedButton(onPressed: ()=>{
-                AppRouter.navigator.pushNamedAndRemoveUntil(
-                  AppRouter.loginScreen,
-                      (Route<dynamic> route) => false,
+                prefs.setBool("loggedIn", false),
+                AppRouter.navigator.pushNamed(
+                  AppRouter.loginScreen
                 )
               },
                 child: Text("CERRAR SESIÓN"),

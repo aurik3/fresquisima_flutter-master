@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fresquisima/routes/AppRouter.dart';
+import 'package:fresquisima/screens/splash_screen.dart';
 
 
 import 'package:fresquisima/values/data.dart';
 import 'package:fresquisima/values/values.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math' as math;
 
 import 'cart_screen.dart';
@@ -20,10 +22,13 @@ class RootScreen extends StatefulWidget {
 }
 class _RootScreenState extends State<RootScreen>
     with SingleTickerProviderStateMixin {
+
+
   final PageStorageBucket bucket = PageStorageBucket();
   Widget currentScreen;
   int currentTab;
   AnimationController _controller;
+  bool _loggedIn=false;
 
 //  final double pi = math.pi;
   final double tilt90Degrees = 90;
@@ -43,7 +48,7 @@ class _RootScreenState extends State<RootScreen>
     print("init runs");
     currentScreen = widget.currentScreen?.currentScreen ?? HomeScreen();
     currentTab = widget.currentScreen?.tab_no ?? 0;
-    loadData();
+
 
     _controller = AnimationController(
       duration: const Duration(milliseconds: 200),
@@ -59,7 +64,10 @@ class _RootScreenState extends State<RootScreen>
       {
         var futures =<Future>[];
         futures.add(getProducts());
-        futures.add(getOrders());
+        if(_loggedIn)
+          {
+            futures.add(getOrders());
+          }
         await Future.wait(futures);
       }
     setState(() {
@@ -90,6 +98,7 @@ class _RootScreenState extends State<RootScreen>
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
     //set statusBarColor color to secondary color
@@ -106,9 +115,31 @@ class _RootScreenState extends State<RootScreen>
 //        // Here light means dark color Status bar icons.
 //      ),
 //    );
+    if(_loggedIn&&currentTab==3)
+      {
+        loadData();
+      }
+    SharedPreferences.getInstance().then((value) => {
+      prefs=value,
+      if(value.getBool("loggedIn")==null)
+        {
+          setState(() {
+            _loggedIn = false;
+            loadData();
+          })
+        }
+      else
+        {
+          setState(() {
+            _loggedIn = value.getBool("loggedIn");
+            loadData();
+          })
+        }
+    });
+
     if(_isDataLoaded)
     {
-      return Scaffold(
+      return SafeArea(child: Scaffold(
         body: PageStorage(
           child: currentScreen,
           bucket: bucket,
@@ -149,8 +180,8 @@ class _RootScreenState extends State<RootScreen>
           shape: AutomaticNotchedShape(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
-                topRight: Radius.circular(20),
-                topLeft: Radius.circular(20),
+                topRight: Radius.circular(currentTab==2?0:20),
+                topLeft: Radius.circular(currentTab==2?0:20),
               ),
             ),
           ),
@@ -179,7 +210,7 @@ class _RootScreenState extends State<RootScreen>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     bottomNavigationIcon(
-                      destination: AccountScreen(),
+                      destination: _loggedIn? AccountScreen():SplashScreen(),
                       currentTab: AccountScreen.TAB_NO,
                       activeIcon: ImagePath.activePersonIcon,
                       nonActiveIcon: ImagePath.personGreyIcon,
@@ -190,7 +221,8 @@ class _RootScreenState extends State<RootScreen>
             ),
           ),
         ),
-      );
+      ))
+        ;
     }
     else
     {

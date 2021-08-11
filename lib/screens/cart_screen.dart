@@ -3,6 +3,7 @@ import 'package:fresquisima/routes/AppRouter.gr.dart';
 import 'package:fresquisima/values/data.dart';
 import 'package:fresquisima/values/values.dart';
 import 'package:fresquisima/widgets/cartItem.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CartScreen extends StatefulWidget{
   static const int TAB_NO = 1;
@@ -12,8 +13,30 @@ class CartScreen extends StatefulWidget{
 }
 
 class _CartScreenState extends State<CartScreen> {
+
+  bool _loggedIn=false;
+
+
+
+
   Widget build(BuildContext context) {
-    List _carritolist=carrito.keys.toList();
+
+    List _carritolist = carrito.keys.toList();
+
+    SharedPreferences.getInstance().then((value) => {
+    if(value.getBool("loggedIn")==null)
+    {
+          setState(() {
+        _loggedIn = false;
+      })
+    }
+    else
+    {
+      setState(() {
+      _loggedIn = value.getBool("loggedIn");
+      })
+    }
+    });
 
     return Scaffold(
         body: Container(
@@ -51,12 +74,19 @@ class _CartScreenState extends State<CartScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   Text("Total: "+getTotalPrice()),
-                  RaisedButton(
-                    child: Text("ir a pago >>",style: TextStyle(color: AppColors.white),),
+                  _loggedIn?
+                  ElevatedButton(
+                    child: Text("ir a pago >>",style: TextStyle(color: Colors.white),),
                     onPressed: _carritolist.length>0?()=>{
                       AppRouter.navigator.pushNamed(AppRouter.paymentScreen)
                     }
                         :null
+                  ):
+                  ElevatedButton(
+                      child: Text("Iniciar Sesion >>",style: TextStyle(color: Colors.white),),
+                      onPressed: ()=>{
+                        AppRouter.navigator.pushNamed(AppRouter.splashScreen)
+                      }
                   ),
                 ],
               ),

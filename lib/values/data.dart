@@ -31,6 +31,7 @@ class Product
 
 bool dataLoaded=false;
 
+
 Map<Product,int> carrito= Map();
 
 List<Product> products= List();
@@ -51,8 +52,6 @@ Future<List<Product>> getProducts() async
 
   var url = 'http://fresquisima.co/views/json_api/Api.php?apicall=readproductos';
   var response = await http.get(url);
-  print('Response status: ${response.statusCode}');
-  print('Response body: ${response.body}');
   Map<String, dynamic> data= jsonDecode(response.body);
   List<dynamic> requestProducts =data["contenido"];
   print(requestProducts[0].toString());
@@ -97,12 +96,12 @@ Future<List<OrderData>> getOrders() async
 
   var url = 'http://fresquisima.co/views/json_api/Api.php?apicall=readventas';
   var response = await http.get(url);
-  print('Response status: ${response.statusCode}');
-  print('Response body: ${response.body}');
-  Map<String, dynamic> data= jsonDecode(response.body);
+  print(response.body);
+  Map<String, dynamic> data= jsonDecode(utf8.decode(response.body.runes.toList()));
   List<dynamic> requestProducts =data["contenido"];
   print(requestProducts[0].toString());
   mail=prefs.getString("mail");
+  orderHistory=[];
   requestProducts.forEach((element) {
     if(element["usuario"]==mail)
       {
@@ -117,11 +116,8 @@ Future<List<OrderData>> getOrders() async
       }
   }
   );
+  orderHistory.sort((a,b)=>b.date.compareTo(a.date));
   dataLoaded=true;
-  if(orderHistory.isNotEmpty)
-    {
-      prefs.setString("lastAddress",orderHistory[0].address.toLowerCase());
-    }
   return orderHistory;
 }
 
@@ -138,8 +134,6 @@ Future<String> handleRegister(String pname,String pmail,String pw) async
   var url = 'http://fresquisima.co/views/json_api/Api.php?apicall=createusuario';
   String brequestBody = "mail=" + pmail + "&password=" + pw + "&usuario=" + pname + "&role=cliente";
   var response = await http.post(url, body: brequestBody,headers: {"Content-Type":"application/x-www-form-urlencoded"});
-  print('Response status: ${response.statusCode}');
-  print('Response body: ${response.body}');
   Map<String, dynamic> data= jsonDecode(response.body);
   if(data["error"])
   {
@@ -167,8 +161,6 @@ Future<String> handleSingIn(String pmail,String pw) async
   var url = 'http://fresquisima.co/views/json_api/Api.php?apicall=loginusuario';
   String body =  "mail="+pmail+"&"+ "password="+pw;
   var response = await http.post(url, body: body,headers: {"Content-Type":"application/x-www-form-urlencoded"});
-  print('Response status: ${response.statusCode}');
-  print('Response body: ${response.body}');
 
   Map<String, dynamic> data= jsonDecode(response.body);
 
@@ -182,6 +174,7 @@ Future<String> handleSingIn(String pmail,String pw) async
       name=data["contenido"]["usuario"];
       prefs.setString("name", name);
       prefs.setString("mail", mail);
+      prefs.setBool("loggedIn", true);
       return "success";
     }
 }
@@ -192,8 +185,8 @@ Future<String> handleContraEntrega(String reference ) async
   var url = 'http://fresquisima.co/views/payment/PaymentSuccess.php';
   String body =  "state_pol=666&"+ "reference_sale="+reference;
   var response = await http.post(url, body: body,headers: {"Content-Type":"application/x-www-form-urlencoded"});
-  print('Response status: ${response.statusCode}');
-  print('Response body: ${response.body}');
+  print('CE Response status: ${response.statusCode}');
+  print('CE Response body: ${response.body}');
 
 
 

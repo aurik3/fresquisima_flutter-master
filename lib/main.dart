@@ -6,33 +6,23 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 Future<void> main() async {
-  bool loggedIn=false;
   WidgetsFlutterBinding.ensureInitialized();
-  prefs = await SharedPreferences.getInstance();
-  if(prefs.getBool("loggedIn")==null)
-    {
-      loggedIn = false;
-    }
-  else
-    {
-      loggedIn = prefs.getBool("loggedIn");
-    }
 
-  runApp(App(loggedIn));
+
+  runApp(App());
 }
 
 class App extends StatelessWidget {
 
   static String _pkg = "order_fold";
-  bool _loggedIn;
 
-  App(this._loggedIn);
+  App();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: buildLightTheme(context),
-      initialRoute: _loggedIn ? AppRouter.rootScreen : AppRouter.splashScreen,
+      initialRoute: AppRouter.rootScreen,
       onGenerateRoute: AppRouter.onGenerateRoute,
       navigatorKey: AppRouter.navigator.key,
     );

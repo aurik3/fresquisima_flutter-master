@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 class PaymentScreen extends StatefulWidget{
   @override
   TextEditingController nameController = TextEditingController(text: name);
-  TextEditingController phoneController = TextEditingController();
+  TextEditingController phoneController = TextEditingController(text :prefs.getString("lastPhone") ?? "");
   TextEditingController addressController = TextEditingController(  text :prefs.getString("lastAddress") ?? "");
 
   bool submittedOnce=false;
@@ -23,15 +23,20 @@ class _PaymentScreenState extends State<PaymentScreen> {
   final List<bool> isSelected = [true,false];
   bool _isInPayU=false;
   String _reference;
-  String sugested = "";
+  String sugestedAddress = "";
+  String sugestedPhone = "";
 
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
     if(prefs.getString("lastAddress")!=null)
       {
-        sugested= prefs.getString("lastAddress");
+        sugestedAddress= prefs.getString("lastAddress");
       }
+    if(prefs.getString("lastPhone")!=null)
+    {
+      sugestedAddress= prefs.getString("lastPhone");
+    }
 
     bool _isOnline=isSelected[1];
 
@@ -247,12 +252,11 @@ Cualquier pedido realizado después de esa hora será despachado en 3 días.''')
 
     var response = await http.post(url, body: body,headers: {"Content-Type":"application/x-www-form-urlencoded"});
 
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
 
 
-
-    prefs.setString("lastAddres", deliverAddress);
+    prefs.setString("lastAddress", deliverAddress);
+    prefs.setString("lastPhone", deliverPhone);
+    carrito = Map();
     if(!isOnline){
       handleContraEntrega(reference);
       showDialog(
