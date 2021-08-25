@@ -32,16 +32,17 @@ class _AccountScreenState extends State<AccountScreen> {
 
 
   Widget build(BuildContext context) {
-
-    getOrders().then((value) => {
-      if(this.mounted)
-        {
-          setState((){
-            _areOrdersLoaded = true;
-          })
-        }
-    });
-
+    if(!_areOrdersLoaded) {
+      getOrders().then((value) =>
+      {
+        if(this.mounted )
+          {
+            setState(() {
+              _areOrdersLoaded = true;
+            })
+          }
+      });
+    }
     return !_areOrdersLoaded? Center(child: CircularProgressIndicator(),):Scaffold(
         body: Center(
           child: Column(

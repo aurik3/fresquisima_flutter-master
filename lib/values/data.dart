@@ -49,12 +49,12 @@ NumberFormat formater = new NumberFormat("\$##,###");
 
 Future<List<Product>> getProducts() async
 {
-
+  products=[];
   var url = 'http://fresquisima.co/views/json_api/Api.php?apicall=readproductos';
   var response = await http.get(url);
   Map<String, dynamic> data= jsonDecode(response.body);
   List<dynamic> requestProducts =data["contenido"];
-  print(requestProducts[0].toString());
+  print("jalando");
   requestProducts.forEach((element) {
     String categoria="";
     switch(element["categoria"])

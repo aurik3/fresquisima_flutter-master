@@ -40,6 +40,7 @@ class _RootScreenState extends State<RootScreen>
 
 
   bool _isDataLoaded=false;
+  bool _iSOrderData=false;
 
   @override
   initState() {
@@ -48,7 +49,7 @@ class _RootScreenState extends State<RootScreen>
     print("init runs");
     currentScreen = widget.currentScreen?.currentScreen ?? HomeScreen();
     currentTab = widget.currentScreen?.tab_no ?? 0;
-
+    loadProducts();
 
     _controller = AnimationController(
       duration: const Duration(milliseconds: 200),
@@ -57,24 +58,24 @@ class _RootScreenState extends State<RootScreen>
     );
   }
 
-  void loadData() async
+
+  void loadOrders() async
   {
 
-    if(products.length<1)
-      {
-        var futures =<Future>[];
-        futures.add(getProducts());
-        if(_loggedIn)
-          {
-            futures.add(getOrders());
-          }
-        await Future.wait(futures);
-      }
+    await getOrders();
+    setState(() {
+      _iSOrderData=true;
+    });
+  }
+
+  void loadProducts() async
+  {
+
+    await getProducts();
     setState(() {
       _isDataLoaded=true;
     });
   }
-
 
   changeScreen({
     @required Widget currentScreen,
@@ -99,6 +100,7 @@ class _RootScreenState extends State<RootScreen>
   }
 
 
+
   @override
   Widget build(BuildContext context) {
     //set statusBarColor color to secondary color
@@ -115,24 +117,22 @@ class _RootScreenState extends State<RootScreen>
 //        // Here light means dark color Status bar icons.
 //      ),
 //    );
-    if(_loggedIn&&currentTab==3)
-      {
-        loadData();
-      }
+
     SharedPreferences.getInstance().then((value) => {
       prefs=value,
       if(value.getBool("loggedIn")==null)
         {
           setState(() {
             _loggedIn = false;
-            loadData();
           })
         }
       else
         {
           setState(() {
             _loggedIn = value.getBool("loggedIn");
-            loadData();
+            if(!_iSOrderData) {
+              loadOrders();
+            }
           })
         }
     });

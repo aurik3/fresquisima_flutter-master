@@ -10,7 +10,9 @@ class HomeScreen extends StatelessWidget{
   static const int TAB_NO = 0;
 
   Widget build(BuildContext context) {
-    return Scaffold(body:
+    return Scaffold(
+
+      body:
       Column(
         children: [
           Stack(
@@ -25,7 +27,7 @@ class HomeScreen extends StatelessWidget{
             children: [
               Image.asset(ImagePath.vegetables_gb,fit: BoxFit.fitWidth,color: AppColors.primaryShadow,),
               Container(
-                margin: EdgeInsets.only(left: 30,right: 30,top: 60),
+                margin: EdgeInsets.only(left: 30,right: 30,top: 19),
                 child: SingleChildScrollView(
                   child:  Column (
                     children: [
